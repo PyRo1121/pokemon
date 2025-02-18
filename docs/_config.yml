@@ -1,0 +1,4 @@
+theme: jekyll-theme-minimal
+title: Pokemon Community Game Bot
+description: Monitor Pokemon spawns in Twitch chat and send them to your Discord server!
+show_downloads: false

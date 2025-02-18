@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokemon Community Game Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        .discord { background-color: #7289DA; }
+    </style>
+</head>
+<body>
+    <h1>Pokemon Community Game Bot</h1>
+    <p>Monitor Pokemon spawns in Twitch chat and send them to your Discord server!</p>
+    
+    <a href="https://discord.com/api/oauth2/authorize?client_id=1341192170371285123&permissions=274878221312&scope=bot%20applications.commands" 
+       class="button discord">Add to Discord</a>
+
+    <h2>Features</h2>
+    <ul>
+        <li>Automatic Pokemon spawn detection</li>
+        <li>Shiny notifications</li>
+        <li>Catch rate calculations</li>
+        <li>Spawn statistics</li>
+    </ul>
+
+    <h2>Commands</h2>
+    <ul>
+        <li><code>/lastspawn</code> - Show the last Pokemon spawn</li>
+        <li><code>/stats</code> - Show spawn statistics</li>
+        <li><code>/shinies</code> - Show recent shiny spawns</li>
+        <li><code>/rarest</code> - Show rarest Pokemon spawns</li>
+    </ul>
+</body>
+</html>
