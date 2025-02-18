@@ -1,0 +1,17 @@
+{
+  "name": "pokemon",
+  "version": "1.0.0",
+  "description": "Pokemon Community Game Discord Bot",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "python web_auth.py",
+    "start:bot": "python pokemon.py",
+    "dev": "python web_auth.py"
+  },
+  "keywords": ["pokemon", "discord", "twitch", "bot"],
+  "author": "",
+  "license": "ISC"
+}
