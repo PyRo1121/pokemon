@@ -25,6 +25,14 @@ A Discord bot that monitors Pokemon spawns in Twitch chat and sends them to your
 2. Use `/setup #channel` to choose where Pokemon spawns appear
 3. That's it! The bot will now send Pokemon spawns to your channel
 
+## Add Bot to Your Server
+
+1. [Click here to add the bot to your server](YOUR_OAUTH_URL)
+2. Use `/setup #channel` to choose where Pokemon notifications appear
+3. The bot will now send spawn notifications to your selected channel
+
+Note: The bot is hosted by the community. If you experience downtime, please contact the bot owner.
+
 ## Required Permissions
 
 The bot needs these permissions in the channel:

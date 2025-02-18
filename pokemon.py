@@ -527,22 +527,38 @@ class DiscordBot(discord.Client):
 
     async def post_pokemon_info(self):
         await self.wait_until_ready()
+        channel = self.get_channel(DISCORD_CHANNEL_ID)
+        
+        print(f"\nChecking Discord configuration:")
+        print(f"Channel ID: {DISCORD_CHANNEL_ID}")
+        print(f"Found channel: {channel}")
+        
+        if not channel:
+            print(f"\nERROR: Cannot find channel {DISCORD_CHANNEL_ID}")
+            print("Please:")
+            print("1. Make sure the bot is in your server")
+            print("2. Verify the channel ID is correct")
+            print("3. Make sure the bot has permission to view the channel")
+            return
+            
+        print(f"Connected to Discord channel: {channel.name} (ID: {DISCORD_CHANNEL_ID})")
+        print(f"Bot permissions in channel: {channel.permissions_for(channel.guild.me)}")
         
         while not self.is_closed():
             if self.twitch_bot and self.twitch_bot.combined_info:
                 try:
-                    # Get list of all guilds and their configured channels
-                    for guild in self.guilds:
-                        channel_id = await self.db.get_server_channel(str(guild.id))
-                        if channel_id:
-                            channel = self.get_channel(int(channel_id))
-                            if channel:
-                                view = PokemonView(self)
-                                await channel.send(embed=self.twitch_bot.combined_info, view=view)
+                    print("\nAttempting to send Pokemon info to Discord...")
+                    print(f"Embed content: {self.twitch_bot.combined_info.to_dict()}")
+                    
+                    view = PokemonView(self)
+                    await channel.send(embed=self.twitch_bot.combined_info, view=view)
+                    print("Successfully sent to Discord!")
                     
                     self.twitch_bot.combined_info = None
                 except Exception as e:
                     print(f"Error sending to Discord: {e}")
+                    print(f"Channel: {channel}")
+                    print(f"Permissions: {channel.permissions_for(channel.guild.me)}")
             await asyncio.sleep(5)
 
 if __name__ == "__main__":

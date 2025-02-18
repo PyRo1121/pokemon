@@ -21,8 +21,14 @@ DISCORD_CLIENT_ID = int(os.getenv('DISCORD_CLIENT_ID', 0))
 DISCORD_BOT_TOKEN = os.environ.get('DISCORD_BOT_TOKEN')
 DISCORD_GUILD_ID = int(os.getenv('DISCORD_GUILD_ID', '0'))
 
-# Simple Bot Invite URL
-OAUTH2_URL = f"https://discord.com/api/oauth2/authorize?client_id={DISCORD_CLIENT_ID}&permissions=274878221312&scope=bot%20applications.commands"
+# Bot Invite URL (updated with all required permissions)
+OAUTH2_URL = (
+    f"https://discord.com/api/oauth2/authorize"
+    f"?client_id={DISCORD_CLIENT_ID}"
+    f"&permissions=274878221312"
+    f"&scope=bot%20applications.commands"
+    f"&redirect_uri=https://discord.com/oauth2/authorized"
+)
 
 # Web Application Settings
 WEB_HOST = os.getenv('WEB_HOST', 'http://localhost:3000')
