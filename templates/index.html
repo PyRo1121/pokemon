@@ -1,42 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Pokemon Community Game Bot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .auth-button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: white;
-        }
-        .twitch {
-            background-color: #9146FF;
-        }
-        .discord {
-            background-color: #7289DA;
-        }
-    </style>
-</head>
-<body>
-    <h1>Pokemon Community Game Bot Setup</h1>
-    <p>Follow these steps to set up the bot:</p>
+{% extends "base.html" %}
+
+{% block title %}Setup Pokemon Bot{% endblock %}
+
+{% block content %}
+<h1>Pokemon Community Game Bot Setup</h1>
+
+{% if error %}
+<div class="error">{{ error }}</div>
+{% endif %}
+
+{% if success %}
+<div class="success">{{ success }}</div>
+{% endif %}
+
+<div class="setup-steps">
+    <h2>Setup Steps:</h2>
     <ol>
-        <li>Authorize with Twitch to allow the bot in your channel</li>
-        <li>Add the bot to your Discord server</li>
-        <li>Configure your Discord channel for Pokemon notifications</li>
+        <li>Connect your Twitch account 
+            <a href="{{ url_for('twitch_auth') }}" class="button twitch">Connect Twitch</a>
+        </li>
+        <li>Add bot to your Discord server 
+            <a href="{{ url_for('discord_auth') }}" class="button discord">Add to Discord</a>
+        </li>
+        {% if twitch_connected %}
+        <li>✅ Twitch connected as: {{ twitch_username }}</li>
+        {% endif %}
+        {% if discord_connected %}
+        <li>✅ Discord bot added to: {{ discord_server }}</li>
+        {% endif %}
     </ol>
-    
-    <div>
-        <a href="/auth/twitch" class="auth-button twitch">Connect Twitch</a>
-        <a href="/auth/discord" class="auth-button discord">Add to Discord</a>
-    </div>
-</body>
-</html>
+</div>
+
+{% if twitch_connected and discord_connected %}
+<div class="success">
+    <h3>🎉 Setup Complete!</h3>
+    <p>Your bot is now monitoring Pokemon spawns in {{ twitch_channel }} and sending updates to Discord.</p>
+</div>
+{% endif %}
+{% endblock %}

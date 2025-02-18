@@ -17,10 +17,8 @@ TWITCH_MONITOR_CHANNEL = os.getenv('TWITCH_MONITOR_CHANNEL')
 # Discord Configuration
 DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID', 0))
 DISCORD_CLIENT_ID = int(os.getenv('DISCORD_CLIENT_ID', 0))
-DISCORD_CLIENT_SECRET = os.getenv('DISCORD_CLIENT_SECRET')
 DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
-DISCORD_GUILD_ID = int(os.getenv('DISCORD_GUILD_ID', '0'))  # Default to '0' if empty
-DISCORD_REDIRECT_URI = f"{WEB_HOST}/auth/discord/callback"  # Updated to use WEB_HOST
+DISCORD_GUILD_ID = int(os.getenv('DISCORD_GUILD_ID', '0'))
 
 # Simple Bot Invite URL
 OAUTH2_URL = f"https://discord.com/api/oauth2/authorize?client_id={DISCORD_CLIENT_ID}&permissions=274878221312&scope=bot%20applications.commands"

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Setup Complete{% endblock %}
+
+{% block content %}
+<h1>✨ Setup Complete! ✨</h1>
+
+<div class="success">
+    <h2>Bot Configuration:</h2>
+    <ul>
+        <li>Monitoring Twitch channel: <strong>{{ twitch_channel }}</strong></li>
+        <li>Sending updates to Discord server: <strong>{{ discord_server }}</strong></li>
+        <li>Updates channel: <strong>#{{ discord_channel }}</strong></li>
+    </ul>
+</div>
+
+<h3>Available Commands:</h3>
+<ul>
+    <li><code>/lastspawn</code> - Show the last Pokemon spawn</li>
+    <li><code>/stats</code> - Show spawn statistics</li>
+    <li><code>/shinies</code> - Show recent shiny spawns</li>
+    <li><code>/rarest</code> - Show rarest Pokemon spawns</li>
+</ul>
+
+<p><a href="{{ url_for('index') }}" class="button success">Return to Dashboard</a></p>
+{% endblock %}
