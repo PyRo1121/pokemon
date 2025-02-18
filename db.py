@@ -44,6 +44,15 @@ class PokemonDB:
                 )
             ''')
             
+            c.execute('''
+                CREATE TABLE IF NOT EXISTS server_configs (
+                    guild_id TEXT PRIMARY KEY,
+                    channel_id TEXT NOT NULL,
+                    added_by TEXT NOT NULL,
+                    added_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
             conn.commit()
 
     async def add_spawn(self, pokemon_data: Dict):
@@ -140,3 +149,19 @@ class PokemonDB:
             ''', (limit,))
             return [dict(zip(['name', 'timestamp', 'tier', 'types'], row))
                    for row in c.fetchall()]
+
+    async def set_server_channel(self, guild_id: str, channel_id: str, user_id: str):
+        with sqlite3.connect(self.db_path) as conn:
+            c = conn.cursor()
+            c.execute('''
+                INSERT OR REPLACE INTO server_configs (guild_id, channel_id, added_by)
+                VALUES (?, ?, ?)
+            ''', (guild_id, channel_id, user_id))
+            conn.commit()
+
+    async def get_server_channel(self, guild_id: str) -> str:
+        with sqlite3.connect(self.db_path) as conn:
+            c = conn.cursor()
+            c.execute('SELECT channel_id FROM server_configs WHERE guild_id = ?', (guild_id,))
+            result = c.fetchone()
+            return result[0] if result else None

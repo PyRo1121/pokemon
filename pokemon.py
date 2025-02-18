@@ -389,6 +389,64 @@ class DiscordBot(discord.Client):
             else:
                 await interaction.response.send_message("You need admin permissions to sync commands!", ephemeral=True)
 
+        @self.tree.command(
+            name="setup",
+            description="Set the channel for Pokemon spawn notifications"
+        )
+        async def setup(interaction: discord.Interaction, channel: discord.TextChannel = None):
+            if not interaction.user.guild_permissions.manage_channels:
+                await interaction.response.send_message(
+                    "❌ You need 'Manage Channels' permission to use this command.",
+                    ephemeral=True
+                )
+                return
+
+            # Use mentioned channel or current channel
+            target_channel = channel or interaction.channel
+            
+            try:
+                # Check if bot has permissions in the channel
+                perms = target_channel.permissions_for(interaction.guild.me)
+                if not all([perms.send_messages, perms.embed_links]):
+                    await interaction.response.send_message(
+                        f"❌ I need permission to send messages and embeds in {target_channel.mention}",
+                        ephemeral=True
+                    )
+                    return
+
+                # Save channel configuration
+                await self.db.set_server_channel(
+                    str(interaction.guild_id),
+                    str(target_channel.id),
+                    str(interaction.user.id)
+                )
+
+                await interaction.response.send_message(
+                    f"✅ Successfully set {target_channel.mention} as the Pokemon notification channel!",
+                    ephemeral=True
+                )
+                
+                # Send test message
+                embed = discord.Embed(
+                    title="Pokemon Bot Setup Complete!",
+                    description="You'll receive Pokemon spawn notifications in this channel.",
+                    color=0x2ECC71
+                )
+                embed.add_field(
+                    name="Available Commands",
+                    value="`/lastspawn` - Show last spawn\n"
+                          "`/stats` - Show statistics\n"
+                          "`/shinies` - Show recent shinies\n"
+                          "`/rarest` - Show rarest spawns"
+                )
+                await target_channel.send(embed=embed)
+
+            except Exception as e:
+                await interaction.response.send_message(
+                    f"❌ Error setting up channel: {str(e)}",
+                    ephemeral=True
+                )
+
     async def setup_hook(self):
         try:
             self.auth_url = await verify_discord_permissions()
@@ -469,46 +527,19 @@ class DiscordBot(discord.Client):
 
     async def post_pokemon_info(self):
         await self.wait_until_ready()
-        channel = self.get_channel(DISCORD_CHANNEL_ID)
-        if not channel:
-            print(f"\nERROR: Cannot find channel {DISCORD_CHANNEL_ID}")
-            print("Please verify the channel exists and bot has access")
-            return
-            
-        print(f"Connected to Discord channel: {channel.name} (ID: {DISCORD_CHANNEL_ID})")
         
-        # Test permissions
-        try:
-            permissions = channel.permissions_for(channel.guild.me)
-            missing_perms = []
-            required_perms = [
-                ('view_channel', 'View Channel'),
-                ('send_messages', 'Send Messages'),
-                ('embed_links', 'Embed Links'),
-                ('attach_files', 'Attach Files'),
-                ('read_message_history', 'Read Message History')
-            ]
-            
-            for perm, name in required_perms:
-                if not getattr(permissions, perm):
-                    missing_perms.append(name)
-                    
-            if missing_perms:
-                print("\nMissing required permissions:")
-                print('\n'.join(f"- {perm}" for perm in missing_perms))
-                print("\nPlease add these permissions in Discord channel settings")
-                return
-                
-        except Exception as e:
-            print(f"Error checking permissions: {e}")
-            return
-            
         while not self.is_closed():
             if self.twitch_bot and self.twitch_bot.combined_info:
-                print("Sending combined Pokemon info to Discord...")
                 try:
-                    view = PokemonView(self)  # Pass self to constructor
-                    await channel.send(embed=self.twitch_bot.combined_info, view=view)
+                    # Get list of all guilds and their configured channels
+                    for guild in self.guilds:
+                        channel_id = await self.db.get_server_channel(str(guild.id))
+                        if channel_id:
+                            channel = self.get_channel(int(channel_id))
+                            if channel:
+                                view = PokemonView(self)
+                                await channel.send(embed=self.twitch_bot.combined_info, view=view)
+                    
                     self.twitch_bot.combined_info = None
                 except Exception as e:
                     print(f"Error sending to Discord: {e}")

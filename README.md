@@ -1,60 +1,62 @@
 # Pokemon Community Game Discord Bot
 
-A Discord bot that monitors Pokemon Community Game on Twitch and tracks Pokemon spawns with enhanced visualization.
+A Discord bot that monitors Pokemon spawns in Twitch chat and sends them to your Discord server with enhanced information, catch rates, and statistics.
 
 ## Features
 
-### Real-time Monitoring
-- Spawn detection with animated sprites
-- Shiny spawn alerts (1/4096 chance)
-- Ball effectiveness tracking
-- Type-based catch rates
+- 🔍 Automatic Pokemon spawn detection
+- ✨ Shiny notifications
+- 📊 Detailed spawn statistics
+- 🎯 Catch rate calculations
+- 🎮 Interactive buttons
+- 📈 Spawn history tracking
 
-### Advanced Information Display
-- **Pokemon Stats:**
-  - Generation and Tier info
-  - Type effectiveness
-  - Base stats (HP, Speed, etc.)
-  - Weight-based catch rates
+## Commands
 
-- **Catch Information:**
-  - Ball-specific catch rates
-  - Special ball bonuses
-  - Time-based ball effectiveness
-  - Type-specific ball recommendations
-
-### Database Features
-- Spawn history tracking
-- Shiny encounter logging
-- Rarity statistics
-- Catch success rates
-
-### Commands
-- `/lastspawn` - View most recent spawn
+- `/setup #channel` - Set which channel receives Pokemon notifications
+- `/lastspawn` - Show the last Pokemon spawn
 - `/stats` - Show spawn statistics
-- `/rarest` - List rarest encounters
 - `/shinies` - Show recent shiny spawns
+- `/rarest` - Show rarest Pokemon spawns
 
-## Setup
+## Quick Start
 
-1. Install Python 3.9+ and required packages:
+1. [Click here to add the bot to your server](https://discord.com/api/oauth2/authorize?client_id=1341192170371285123&permissions=274878221312&scope=bot%20applications.commands)
+2. Use `/setup #channel` to choose where Pokemon spawns appear
+3. That's it! The bot will now send Pokemon spawns to your channel
+
+## Required Permissions
+
+The bot needs these permissions in the channel:
+- View Channels
+- Send Messages
+- Embed Links
+- Use External Emojis
+- Add Reactions
+
+## Self-Hosting
+
+If you want to host your own instance:
+
+1. Clone this repository
+2. Create a `.env` file with your tokens:
+```env
+# Twitch settings
+TWITCH_TOKEN='your_oauth_token'
+TWITCH_CHANNEL='your_channel'
+TWITCH_MONITOR_CHANNEL='target_channel'
+
+# Discord settings
+DISCORD_TOKEN='your_bot_token'
+DISCORD_CHANNEL_ID=your_channel_id
+```
+
+3. Install Python 3.9+ and required packages:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Configure config.py with:
-```python
-# Twitch settings
-TWITCH_TOKEN = 'your_oauth_token'
-TWITCH_CHANNEL = 'your_channel'
-TWITCH_MONITOR_CHANNEL = 'target_channel'
-
-# Discord settings
-DISCORD_TOKEN = 'your_bot_token'
-DISCORD_CHANNEL_ID = your_channel_id
-```
-
-3. Run the bot:
+4. Run the bot:
 ```bash
 python pokemon.py
 ```

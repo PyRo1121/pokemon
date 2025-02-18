@@ -12,6 +12,9 @@ jobs:
       DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
       TWITCH_TOKEN: ${{ secrets.TWITCH_TOKEN }}
       DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+      DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+      DISCORD_GUILD_ID: ${{ secrets.DISCORD_GUILD_ID }}
+      TWITCH_MONITOR_CHANNEL: ${{ secrets.TWITCH_MONITOR_CHANNEL }}
     steps:
     - uses: actions/checkout@v4
     
