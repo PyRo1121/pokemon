@@ -16,10 +16,10 @@
 <div class="setup-steps">
     <h2>Setup Steps:</h2>
     <ol>
-        <li>Connect your Twitch account 
+        <li>Connect your Twitch account
             <a href="{{ url_for('twitch_auth') }}" class="button twitch">Connect Twitch</a>
         </li>
-        <li>Add bot to your Discord server 
+        <li>Add bot to your Discord server
             <a href="{{ url_for('discord_auth') }}" class="button discord">Add to Discord</a>
         </li>
         {% if twitch_connected %}

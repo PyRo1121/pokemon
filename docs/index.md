@@ -6,7 +6,7 @@ layout: default
 
 Monitor Pokemon spawns in Twitch chat and send them to your Discord server with enhanced information, catch rates, and statistics.
 
-<a href="https://discord.com/api/oauth2/authorize?client_id=1341192170371285123&permissions=274878221312&scope=bot%20applications.commands" 
+<a href="https://discord.com/api/oauth2/authorize?client_id=1341192170371285123&permissions=274878221312&scope=bot%20applications.commands"
    class="button discord">Add to Discord</a>
 
 <div class="grid md:grid-cols-2 gap-8 mb-16">
@@ -64,31 +64,31 @@ Monitor Pokemon spawns in Twitch chat and send them to your Discord server with 
         <h3 class="font-bold text-lg mb-2 text-gray-800">Spawn Detection</h3>
         <p class="text-gray-600">Automatic Pokemon spawn monitoring and notifications</p>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow-lg p-6 text-center">
         <div class="text-4xl mb-4">✨</div>
         <h3 class="font-bold text-lg mb-2 text-gray-800">Shiny Alerts</h3>
         <p class="text-gray-600">Never miss a shiny Pokemon spawn again</p>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow-lg p-6 text-center">
         <div class="text-4xl mb-4">📊</div>
         <h3 class="font-bold text-lg mb-2 text-gray-800">Statistics</h3>
         <p class="text-gray-600">Detailed spawn rates and catch statistics</p>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow-lg p-6 text-center">
         <div class="text-4xl mb-4">🎯</div>
         <h3 class="font-bold text-lg mb-2 text-gray-800">Catch Rates</h3>
         <p class="text-gray-600">Optimized catching strategies and ball recommendations</p>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow-lg p-6 text-center">
         <div class="text-4xl mb-4">🎮</div>
         <h3 class="font-bold text-lg mb-2 text-gray-800">Interactive</h3>
         <p class="text-gray-600">Button controls and intuitive command interface</p>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow-lg p-6 text-center">
         <div class="text-4xl mb-4">📈</div>
         <h3 class="font-bold text-lg mb-2 text-gray-800">History</h3>

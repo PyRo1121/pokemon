@@ -1,22 +1,23 @@
-from flask import Flask, request, redirect, session, render_template
-from config import *
-import requests
 import secrets
 
-app = Flask(__name__, 
-    template_folder='templates',
-    static_folder='static'
-)
+import requests
+from flask import Flask, redirect, render_template, request, session
+
+from config import *
+
+app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = secrets.token_hex(16)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
-@app.route('/auth/twitch')
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+@app.route("/auth/twitch")
 def twitch_auth():
     state = secrets.token_hex(16)
-    session['state'] = state
+    session["state"] = state
     return redirect(
         f"https://id.twitch.tv/oauth2/authorize"
         f"?client_id={TWITCH_CLIENT_ID}"
@@ -26,7 +27,8 @@ def twitch_auth():
         f"&state={state}"
     )
 
-@app.route('/auth/discord')
+
+@app.route("/auth/discord")
 def discord_auth():
     return redirect(
         f"https://discord.com/api/oauth2/authorize"
@@ -36,5 +38,6 @@ def discord_auth():
         f"&redirect_uri={DISCORD_REDIRECT_URI}"
     )
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=3000)

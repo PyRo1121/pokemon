@@ -1,25 +1,26 @@
 import os
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env file in development
-if os.path.exists('.env'):
+if os.path.exists(".env"):
     load_dotenv()
 
 # Twitch Configuration
-TWITCH_TOKEN = os.environ.get('TWITCH_TOKEN')
-TWITCH_CLIENT_ID = os.getenv('TWITCH_CLIENT_ID')
-TWITCH_CLIENT_SECRET = os.getenv('TWITCH_CLIENT_SECRET')
-TWITCH_ACCESS_TOKEN = os.getenv('TWITCH_ACCESS_TOKEN')
-TWITCH_REFRESH_TOKEN = os.getenv('TWITCH_REFRESH_TOKEN')
-TWITCH_USER_ID = os.getenv('TWITCH_USER_ID')
-TWITCH_CHANNEL = os.getenv('TWITCH_CHANNEL')
-TWITCH_MONITOR_CHANNEL = os.getenv('TWITCH_MONITOR_CHANNEL')
+TWITCH_TOKEN = os.environ.get("TWITCH_TOKEN")
+TWITCH_CLIENT_ID = os.getenv("TWITCH_CLIENT_ID")
+TWITCH_CLIENT_SECRET = os.getenv("TWITCH_CLIENT_SECRET")
+TWITCH_ACCESS_TOKEN = os.getenv("TWITCH_ACCESS_TOKEN")
+TWITCH_REFRESH_TOKEN = os.getenv("TWITCH_REFRESH_TOKEN")
+TWITCH_USER_ID = os.getenv("TWITCH_USER_ID")
+TWITCH_CHANNEL = os.getenv("TWITCH_CHANNEL")
+TWITCH_MONITOR_CHANNEL = os.getenv("TWITCH_MONITOR_CHANNEL")
 
 # Discord Configuration
-DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID', 0))
-DISCORD_CLIENT_ID = int(os.getenv('DISCORD_CLIENT_ID', 0))
-DISCORD_BOT_TOKEN = os.environ.get('DISCORD_BOT_TOKEN')
-DISCORD_GUILD_ID = int(os.getenv('DISCORD_GUILD_ID', '0'))
+DISCORD_CHANNEL_ID = int(os.getenv("DISCORD_CHANNEL_ID", 0))
+DISCORD_CLIENT_ID = int(os.getenv("DISCORD_CLIENT_ID", 0))
+DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
+DISCORD_GUILD_ID = int(os.getenv("DISCORD_GUILD_ID", "0"))
 
 # Bot Invite URL (updated with all required permissions)
 OAUTH2_URL = (
@@ -31,7 +32,7 @@ OAUTH2_URL = (
 )
 
 # Web Application Settings
-WEB_HOST = os.getenv('WEB_HOST', 'http://localhost:3000')
+WEB_HOST = os.getenv("WEB_HOST", "http://localhost:3000")
 TWITCH_REDIRECT_URI = f"{WEB_HOST}/auth/twitch/callback"
 
 # Database for storing user configurations
