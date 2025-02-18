@@ -363,36 +363,68 @@ class PokemonView(View):
     def __init__(self, bot):
         super().__init__(timeout=60)
         self.bot = bot
-        self.add_item(
-            Button(
-                label="📊 Stats", custom_id="stats", style=discord.ButtonStyle.primary
-            )
-        )
-        self.add_item(
-            Button(
-                label="✨ Shinies",
-                custom_id="shinies",
-                style=discord.ButtonStyle.success,
-            )
-        )
-        self.add_item(
-            Button(
-                label="🏆 Rarest", custom_id="rarest", style=discord.ButtonStyle.danger
-            )
-        )
 
-    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+    @discord.ui.button(label="📊 Stats", style=discord.ButtonStyle.primary)
+    async def stats_button(
+        self, interaction: discord.Interaction, button: discord.ui.Button
+    ):
         try:
-            if interaction.data["custom_id"] == "stats":
-                await self.bot.stats(interaction)
-            elif interaction.data["custom_id"] == "shinies":
-                await self.bot.shinies(interaction)
-            elif interaction.data["custom_id"] == "rarest":
-                await self.bot.rarest(interaction)
-            return True
+            stats = await self.bot.db.get_spawn_stats()
+            embed = discord.Embed(
+                title="Pokemon Spawn Statistics",
+                color=0x2ECC71,
+                description=f"Total Spawns: {stats['total_spawns']}\n"
+                f"Unique Pokemon: {stats['unique_pokemon']}\n"
+                f"Shiny Encounters: {stats['total_shinies']}",
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
         except Exception as e:
-            print(f"Button interaction error: {e}")
-            return False
+            print(f"Stats button error: {e}")
+            await interaction.response.send_message(
+                "Error fetching stats!", ephemeral=True
+            )
+
+    @discord.ui.button(label="✨ Shinies", style=discord.ButtonStyle.success)
+    async def shinies_button(
+        self, interaction: discord.Interaction, button: discord.ui.Button
+    ):
+        try:
+            shinies = await self.bot.db.get_recent_shinies()
+            embed = discord.Embed(title="✨ Recent Shiny Spawns ✨", color=0xFFD700)
+            for shiny in shinies:
+                embed.add_field(
+                    name=shiny["name"],
+                    value=f"Tier: {shiny['tier']}\nTypes: {shiny['types']}\n"
+                    f"Found: {shiny['timestamp']}",
+                    inline=False,
+                )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        except Exception as e:
+            print(f"Shinies button error: {e}")
+            await interaction.response.send_message(
+                "Error fetching shinies!", ephemeral=True
+            )
+
+    @discord.ui.button(label="🏆 Rarest", style=discord.ButtonStyle.danger)
+    async def rarest_button(
+        self, interaction: discord.Interaction, button: discord.ui.Button
+    ):
+        try:
+            rarest = await self.bot.db.get_rarest_spawns()
+            embed = discord.Embed(title="Rarest Pokemon Spawns", color=0xFF0000)
+            for pokemon in rarest:
+                embed.add_field(
+                    name=pokemon["name"],
+                    value=f"Spawns: {pokemon['count']}\nShinies: {pokemon['shinies']}\n"
+                    f"Last seen: {pokemon['last_seen']}",
+                    inline=False,
+                )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        except Exception as e:
+            print(f"Rarest button error: {e}")
+            await interaction.response.send_message(
+                "Error fetching rarest spawns!", ephemeral=True
+            )
 
 
 class DiscordBot(discord.Client):
