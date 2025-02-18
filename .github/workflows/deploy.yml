@@ -19,9 +19,8 @@ jobs:
     - name: Build site
       run: |
         cd docs
-        gem install bundler jekyll
-        bundle init
-        bundle add jekyll
+        bundle config set --local path 'vendor/bundle'
+        bundle install
         bundle exec jekyll build
     
     - name: Deploy to GitHub Pages
